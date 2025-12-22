@@ -3,7 +3,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoanEligibilityService
 {
-        public String checkEligibility()
+    public String checkEligibility()
     {
         return "Loan Eligible";
     }

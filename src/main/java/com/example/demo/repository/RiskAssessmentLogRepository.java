@@ -3,8 +3,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class FinancialProfileService
 {
-public String getFinancialProfile()
-{
-return "Financial Profile Service";
-}
+    public String getFinancialProfile()
+    {
+        return "Financial Profile Service";
+    }
 }

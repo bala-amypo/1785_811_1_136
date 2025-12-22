@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 public class FinancialProfileService
 {
     public String getFinancialProfile()
-        {
+    {
         return "Financial Profile Service";
     }
 }

@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class AuthController
 {
-@PostMapping("/login")
-public String login()
+    @PostMapping("/login")
+    public String login()
     {
-    return "Login Successful";
+        return "Login Successful";
     }
 }

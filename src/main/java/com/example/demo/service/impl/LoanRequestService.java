@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 public class LoanRequestService
 {
     public String requestLoan()
-        {
+    {
         return "Loan Requested";
-        }
+    }
 }

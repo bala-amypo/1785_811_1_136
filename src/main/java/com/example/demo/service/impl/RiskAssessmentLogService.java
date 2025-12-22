@@ -4,8 +4,8 @@ import org.springframework.stereotype.Service;
 public class RiskAssessmentLogService
 {
     public String assessRisk()
-        {
-            return "Risk Assessed";
-        }
+    {
+        return "Risk Assessed";
+    }
 }
 ​
