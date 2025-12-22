@@ -4,9 +4,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/risk")
 public class RiskLogController
 {
-@GetMapping("/{userId}")
-public String getRisk(@PathVariable Long userId)
-{
-return "Low Risk";
-}
+    @GetMapping("/{userId}")
+    public String getRisk(@PathVariable Long userId)
+    {
+        return "Low Risk";
+    }
 }

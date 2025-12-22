@@ -4,9 +4,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/financial-profile")
 public class FinancialProfileController
 {
-@GetMapping("/{userId}")
-public String getProfile(@PathVariable Long userId)
-{
-return "Profile Data";
-}
+    @GetMapping("/{userId}")
+    public String getProfile(@PathVariable Long userId)
+    {
+        return "Profile Data";
+    }
 }

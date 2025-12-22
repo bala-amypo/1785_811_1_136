@@ -4,9 +4,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/loan")
 public class LoanRequestController
 {
-@PostMapping("/apply")
-public String applyLoan()
-{
-return "Loan Applied";
-}
+    @PostMapping("/apply")
+    public String applyLoan()
+    {
+        return "Loan Applied";
+    }
 }

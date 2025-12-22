@@ -4,9 +4,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/eligibility")
 public class EligibilityController
 {
-@GetMapping("/{userId}")
-public String checkEligibility(@PathVariable Long userId)
-{
-return "Eligible";
-}
+    @GetMapping("/{userId}")
+    public String checkEligibility(@PathVariable Long userId)
+    {
+        return "Eligible";
+    }
 }
