@@ -3,8 +3,8 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "financial_profiles")
-public class FinancialProfile {
+@Table(name = "eligibility_results")
+public class EligibilityResult {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,10 +15,9 @@ public class FinancialProfile {
     private User user;
 
     @Column(nullable = false)
-    private double annualIncome;
+    private boolean eligible;
 
-    @Column(nullable = false)
-    private int creditScore;
+    private String reason;
 
     public Long getId() {
         return id;
@@ -36,19 +35,19 @@ public class FinancialProfile {
         this.user = user;
     }
     
-    public double getAnnualIncome() {
-        return annualIncome;
+    public boolean isEligible() {
+        return eligible;
     }
     
-    public void setAnnualIncome(double annualIncome) {
-        this.annualIncome = annualIncome;
+    public void setEligible(boolean eligible) {
+        this.eligible = eligible;
     }
     
-    public int getCreditScore() {
-        return creditScore;
+    public String getReason() {
+        return reason;
     }
     
-    public void setCreditScore(int creditScore) {
-        this.creditScore = creditScore;
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 }
