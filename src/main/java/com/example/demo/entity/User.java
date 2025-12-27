@@ -6,18 +6,21 @@ import jakarta.persistence.*;
 @Table(name = "users")
 public class User {
 
+    public enum Role {
+        USER,
+        ADMIN
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    private String email;
-
+    private String username;
     private String password;
-
     private String fullName;
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public Long getId() {
         return id;
@@ -27,12 +30,12 @@ public class User {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -51,11 +54,11 @@ public class User {
         this.fullName = fullName;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 }

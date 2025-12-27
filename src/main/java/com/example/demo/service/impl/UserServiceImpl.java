@@ -7,21 +7,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl {
 
-    public UserServiceImpl() {
-    }
+    private final UserRepository userRepository;
 
     public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    public User getById(long id) {
-        User u = new User();
-        u.setId(id);
-        return u;
-    }
-
-    public User findByEmail(String email) {
-        User u = new User();
-        u.setEmail(email);
-        return u;
+    public User register(User user) {
+        return userRepository.save(user);
     }
 }
