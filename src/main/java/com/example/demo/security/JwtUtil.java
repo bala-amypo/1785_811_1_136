@@ -12,10 +12,12 @@ import java.util.Map;
 @Component
 public class JwtUtil {
 
-    private final String secret = "test-secret-key";
-    private final long expirationMs = 3600000;
+    private String secret;
+    private long expirationMs;
 
     public JwtUtil() {
+        this.secret = "test-secret-key";
+        this.expirationMs = 3600000;
     }
 
     public JwtUtil(String secret, int expirationMs) {

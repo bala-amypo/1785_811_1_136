@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
-public interface RiskAssessmentService
-{
-    String assessRisk(long userId);
+import com.example.demo.entity.RiskAssessment;
+
+public interface RiskAssessmentService {
+    RiskAssessment assessRisk(Long loanRequestId);
+    RiskAssessment getByLoanRequestId(Long loanRequestId);
 }
