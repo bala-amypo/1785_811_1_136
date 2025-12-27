@@ -17,7 +17,7 @@ public class LoanRequestServiceImpl implements LoanRequestService {
     }
 
     @Override
-    public LoanRequest create(LoanRequest loanRequest) {
+    public LoanRequest applyLoan(LoanRequest loanRequest) {
         loanRequest.setStatus(LoanRequest.Status.PENDING.name());
         return loanRequestRepository.save(loanRequest);
     }
