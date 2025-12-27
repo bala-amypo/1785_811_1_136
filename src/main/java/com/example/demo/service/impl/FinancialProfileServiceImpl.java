@@ -1,15 +1,26 @@
 package com.example.demo.service.impl;
 
-import org.springframework.stereotype.Service;
 import com.example.demo.entity.FinancialProfile;
-import com.example.demo.service.FinancialProfileService;
+import com.example.demo.repository.FinancialProfileRepository;
+import com.example.demo.repository.UserRepository;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
-public class FinancialProfileServiceImpl implements FinancialProfileService
-{
-    @Override
-    public FinancialProfile getByUserId(long userId)
-    {
-        return new FinancialProfile();
+public class FinancialProfileServiceImpl {
+
+    public FinancialProfileServiceImpl() {
+    }
+
+    public FinancialProfileServiceImpl(
+            FinancialProfileRepository repo,
+            UserRepository userRepo
+    ) {
+    }
+
+    public FinancialProfile createOrUpdate(FinancialProfile fp) {
+        fp.setLastUpdatedAt(LocalDateTime.now());
+        return fp;
     }
 }
