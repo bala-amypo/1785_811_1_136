@@ -24,13 +24,13 @@ public class LoanRequestServiceImpl implements LoanRequestService
     }
 
     @Override
-    public LoanRequest getById(long id)
+    public LoanRequest getById(Long id)
     {
         return loanRequestRepository.findById(id).orElse(null);
     }
 
     @Override
-    public List<LoanRequest> getRequestsByUser(long userId)
+    public List<LoanRequest> getRequestsByUser(Long userId)
     {
         return loanRequestRepository.findByUserId(userId);
     }

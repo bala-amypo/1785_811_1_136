@@ -16,7 +16,7 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService
     }
 
     @Override
-    public RiskAssessment assessRisk(long loanRequestId)
+    public RiskAssessment assessRisk(Long loanRequestId)
     {
         RiskAssessment ra = new RiskAssessment();
         ra.setLoanRequestId(loanRequestId);
@@ -27,7 +27,7 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService
     }
 
     @Override
-    public RiskAssessment getByLoanRequestId(long loanRequestId)
+    public RiskAssessment getByLoanRequestId(Long loanRequestId)
     {
         return riskAssessmentRepository.findByLoanRequestId(loanRequestId).orElse(null);
     }
