@@ -10,17 +10,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class RiskAssessmentServiceImpl implements RiskAssessmentService
 {
-    private final LoanRequestRepository loanRequestRepository;
-    private final FinancialProfileRepository financialProfileRepository;
-    private final RiskAssessmentRepository riskAssessmentRepository;
+    private LoanRequestRepository loanRequestRepository;
+    private FinancialProfileRepository financialProfileRepository;
+    private RiskAssessmentRepository riskAssessmentRepository;
 
+    // REQUIRED by Spring
+    public RiskAssessmentServiceImpl()
+    {
+    }
+
+    // Used by tests
     public RiskAssessmentServiceImpl(RiskAssessmentRepository riskAssessmentRepository)
     {
-        this.loanRequestRepository = null;
-        this.financialProfileRepository = null;
         this.riskAssessmentRepository = riskAssessmentRepository;
     }
 
+    // Used by tests
     public RiskAssessmentServiceImpl(
             LoanRequestRepository loanRequestRepository,
             FinancialProfileRepository financialProfileRepository,
@@ -32,13 +37,9 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService
     }
 
     @Override
-    public RiskAssessment assessRisk(Long loanRequestId)
+    public RiskAssessment save(RiskAssessment assessment)
     {
-        RiskAssessment ra = new RiskAssessment();
-        ra.setLoanRequestId(loanRequestId);
-        ra.setRiskScore(50);
-        ra.setDtiRatio(0.4);
-        return riskAssessmentRepository.save(ra);
+        return riskAssessmentRepository.save(assessment);
     }
 
     @Override

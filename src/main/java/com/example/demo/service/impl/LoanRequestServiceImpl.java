@@ -11,16 +11,24 @@ import java.util.List;
 @Service
 public class LoanRequestServiceImpl implements LoanRequestService
 {
-    private final LoanRequestRepository loanRequestRepository;
-    private final UserRepository userRepository;
+    private LoanRequestRepository loanRequestRepository;
+    private UserRepository userRepository;
 
+    // REQUIRED by Spring
+    public LoanRequestServiceImpl()
+    {
+    }
+
+    // Used by tests
     public LoanRequestServiceImpl(LoanRequestRepository loanRequestRepository)
     {
         this.loanRequestRepository = loanRequestRepository;
-        this.userRepository = null;
     }
 
-    public LoanRequestServiceImpl(LoanRequestRepository loanRequestRepository, UserRepository userRepository)
+    // Used by tests
+    public LoanRequestServiceImpl(
+            LoanRequestRepository loanRequestRepository,
+            UserRepository userRepository)
     {
         this.loanRequestRepository = loanRequestRepository;
         this.userRepository = userRepository;
