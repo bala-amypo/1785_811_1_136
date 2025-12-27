@@ -11,8 +11,6 @@ public class SimpleStatusServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException {
-        response.setContentType("text/plain");
         response.getWriter().write("Application is running");
     }
 }
-/home/coder/Workspace/demo/src/test
