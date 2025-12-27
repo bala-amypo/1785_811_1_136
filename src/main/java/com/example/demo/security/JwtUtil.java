@@ -1,18 +1,16 @@
 package com.example.demo.security;
 
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.Keys;
 import java.util.*;
-import java.security.Key;
 
 public class JwtUtil
 {
-    private final Key key;
+    private final String secret;
     private final long expiryMillis;
 
     public JwtUtil(String secret, long expiryMillis)
     {
-        this.key = Keys.hmacShaKeyFor(secret.getBytes());
+        this.secret = secret;
         this.expiryMillis = expiryMillis;
     }
 
@@ -23,15 +21,14 @@ public class JwtUtil
                 .setSubject(subject)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expiryMillis))
-                .signWith(key, SignatureAlgorithm.HS256)
+                .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
 
     public Claims getAllClaims(String token)
     {
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
+        return Jwts.parser()
+                .setSigningKey(secret)
                 .parseClaimsJws(token)
                 .getBody();
     }
