@@ -1,67 +1,47 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
-public class RiskAssessment
-{
+public class RiskAssessment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private long userId;
-    private String riskLevel;
-    private String remarks;
-    private LocalDateTime assessedAt;
+    private Long loanRequestId;
+    private Double riskScore;
+    private Double dtiRatio;
 
-    public Long getId()
-    {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Long id)
-    {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public long getUserId()
-    {
-        return userId;
+    public Long getLoanRequestId() {
+        return loanRequestId;
     }
 
-    public void setUserId(long userId)
-    {
-        this.userId = userId;
+    public void setLoanRequestId(Long loanRequestId) {
+        this.loanRequestId = loanRequestId;
     }
 
-    public String getRiskLevel()
-    {
-        return riskLevel;
+    public Double getRiskScore() {
+        return riskScore;
     }
 
-    public void setRiskLevel(String riskLevel)
-    {
-        this.riskLevel = riskLevel;
+    public void setRiskScore(Double riskScore) {
+        this.riskScore = riskScore;
     }
 
-    public String getRemarks()
-    {
-        return remarks;
+    public Double getDtiRatio() {
+        return dtiRatio;
     }
 
-    public void setRemarks(String remarks)
-    {
-        this.remarks = remarks;
-    }
-
-    public LocalDateTime getAssessedAt()
-    {
-        return assessedAt;
-    }
-
-    public void setAssessedAt(LocalDateTime assessedAt)
-    {
-        this.assessedAt = assessedAt;
+    public void setDtiRatio(Double dtiRatio) {
+        this.dtiRatio = dtiRatio;
     }
 }

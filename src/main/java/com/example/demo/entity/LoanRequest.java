@@ -1,5 +1,9 @@
 package com.example.demo.entity;
 
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
 public class LoanRequest {
 
     public enum Status {
@@ -8,8 +12,33 @@ public class LoanRequest {
         REJECTED
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
     private User user;
-    private Status status;
+
+    private Double requestedAmount;
+    private Integer tenureMonths;
+    private String status;
+    private LocalDateTime submittedAt;
+
+    @PrePersist
+    public void onCreate() {
+        submittedAt = LocalDateTime.now();
+        if (status == null) {
+            status = Status.PENDING.name();
+        }
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public User getUser() {
         return user;
@@ -19,11 +48,27 @@ public class LoanRequest {
         this.user = user;
     }
 
-    public Status getStatus() {
+    public Double getRequestedAmount() {
+        return requestedAmount;
+    }
+
+    public void setRequestedAmount(Double requestedAmount) {
+        this.requestedAmount = requestedAmount;
+    }
+
+    public Integer getTenureMonths() {
+        return tenureMonths;
+    }
+
+    public void setTenureMonths(Integer tenureMonths) {
+        this.tenureMonths = tenureMonths;
+    }
+
+    public String getStatus() {
         return status;
     }
-    
-    public void setStatus(Status status) {
-        this.status = status;
+
+    public LocalDateTime getSubmittedAt() {
+        return submittedAt;
     }
 }

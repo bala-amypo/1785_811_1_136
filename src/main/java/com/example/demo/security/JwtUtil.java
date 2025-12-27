@@ -1,25 +1,32 @@
 package com.example.demo.security;
 
-import java.util.HashMap;
-import java.util.Map;
+import io.jsonwebtoken.*;
+import java.util.*;
 
 public class JwtUtil {
 
-    public JwtUtil() {
+    private final String secret;
+    private final long expiration;
+
+    public JwtUtil(String secret, long expiration) {
+        this.secret = secret;
+        this.expiration = expiration;
     }
 
-    public JwtUtil(String secret, int expiry) {
+    public String generateToken(Map<String, Object> claims, String subject) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(SignatureAlgorithm.HS256, secret)
+                .compact();
     }
 
-    public String generateToken(String username) {
-        return "dummy-token";
-    }
-
-    public String generateToken(Map<String,Object> claims, String subject) {
-        return "dummy-token";
-    }
-
-    public Map<String,Object> getAllClaims(String token) {
-        return new HashMap<>();
+    public Claims getAllClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(secret)
+                .parseClaimsJws(token)
+                .getBody();
     }
 }
