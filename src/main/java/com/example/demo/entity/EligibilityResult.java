@@ -3,30 +3,41 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "eligibility_result")
 public class EligibilityResult
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "loan_request_id")
-    private Long loanRequestId;
+    @ManyToOne
+    @JoinColumn(name = "loan_request_id")
+    private LoanRequest loanRequest;
 
     private Double maxEligibleAmount;
+
+    public EligibilityResult()
+    {
+    }
 
     public Long getId()
     {
         return id;
     }
 
-    public Long getLoanRequestId()
+    public void setId(Long id)
     {
-        return loanRequestId;
+        this.id = id;
     }
 
-    public void setLoanRequestId(Long loanRequestId)
+    public LoanRequest getLoanRequest()
     {
-        this.loanRequestId = loanRequestId;
+        return loanRequest;
+    }
+
+    public void setLoanRequest(LoanRequest loanRequest)
+    {
+        this.loanRequest = loanRequest;
     }
 
     public Double getMaxEligibleAmount()
