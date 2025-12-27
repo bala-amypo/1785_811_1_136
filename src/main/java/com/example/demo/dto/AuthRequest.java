@@ -1,22 +1,13 @@
 package com.example.demo.dto;
 
-public class AuthRequest {
-
+public class AuthRequest
+{
     private String email;
     private String password;
 
-    public AuthRequest() {}
+    public AuthRequest(){}
+    public AuthRequest(String e,String p){email=e;password=p;}
 
-    public AuthRequest(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
+    public String getEmail(){return email;}
+    public String getPassword(){return password;}
 }

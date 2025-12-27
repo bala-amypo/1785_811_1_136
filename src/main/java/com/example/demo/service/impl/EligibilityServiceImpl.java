@@ -1,40 +1,36 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.EligibilityResult;
-import com.example.demo.repository.EligibilityResultRepository;
-import com.example.demo.repository.FinancialProfileRepository;
-import com.example.demo.repository.LoanRequestRepository;
-import com.example.demo.service.EligibilityService;
-import org.springframework.stereotype.Service;
+import com.example.demo.repository.*;
+import com.example.demo.entity.*;
+import com.example.demo.exception.*;
 
-import java.util.Optional;
+public class EligibilityServiceImpl
+{
+    private final LoanRequestRepository loanRepo;
+    private final FinancialProfileRepository profileRepo;
+    private final EligibilityResultRepository repo;
 
-@Service
-public class EligibilityServiceImpl implements EligibilityService {
-
-    private final LoanRequestRepository loanRequestRepository;
-    private final FinancialProfileRepository financialProfileRepository;
-    private final EligibilityResultRepository eligibilityResultRepository;
-
-    public EligibilityServiceImpl(
-            LoanRequestRepository loanRequestRepository,
-            FinancialProfileRepository financialProfileRepository,
-            EligibilityResultRepository eligibilityResultRepository) {
-
-        this.loanRequestRepository = loanRequestRepository;
-        this.financialProfileRepository = financialProfileRepository;
-        this.eligibilityResultRepository = eligibilityResultRepository;
+    public EligibilityServiceImpl(LoanRequestRepository l, FinancialProfileRepository f, EligibilityResultRepository e)
+    {
+        loanRepo=l; profileRepo=f; repo=e;
     }
 
-    @Override
-    public EligibilityResult evaluateEligibility(Long loanRequestId) {
-        EligibilityResult result = new EligibilityResult();
-        result.setMaxEligibleAmount(500000.0);
-        return eligibilityResultRepository.save(result);
+    public EligibilityResult evaluateEligibility(Long reqId)
+    {
+        if(repo.findByLoanRequestId(reqId).isPresent())
+            throw new BadRequestException("Already evaluated");
+
+        LoanRequest lr = loanRepo.findById(reqId).orElseThrow();
+        FinancialProfile fp = profileRepo.findByUserId(lr.getUser().getId()).orElseThrow();
+
+        EligibilityResult er = new EligibilityResult();
+        er.setLoanRequest(lr);
+        er.setMaxEligibleAmount(Math.max(0, fp.getMonthlyIncome()*20));
+        return repo.save(er);
     }
 
-    @Override
-    public Optional<EligibilityResult> getByLoanRequestId(Long loanRequestId) {
-        return eligibilityResultRepository.findByLoanRequestId(loanRequestId);
+    public EligibilityResult getByLoanRequestId(Long id)
+    {
+        return repo.findByLoanRequestId(id).orElseThrow();
     }
 }

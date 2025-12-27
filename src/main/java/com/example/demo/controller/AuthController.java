@@ -1,31 +1,37 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.AuthRequest;
-import com.example.demo.dto.AuthResponse;
-import com.example.demo.entity.User;
-import com.example.demo.security.JwtUtil;
-import com.example.demo.service.UserService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import com.example.demo.dto.*;
+import com.example.demo.repository.*;
+import com.example.demo.entity.*;
+import com.example.demo.security.*;
+import org.springframework.http.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import java.util.*;
 
-@RestController
-@RequestMapping("/auth")
 public class AuthController
 {
-    private UserService userService;
-    private JwtUtil jwtUtil;
+    private final UserServiceImpl service;
+    private final JwtUtil util;
+    private final UserRepository repo;
+    private final BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
 
-    public AuthController(UserService userService, JwtUtil jwtUtil)
+    public AuthController(UserServiceImpl s,JwtUtil u,UserRepository r)
     {
-        this.userService = userService;
-        this.jwtUtil = jwtUtil;
+        service=s;util=u;repo=r;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request)
+    public ResponseEntity<AuthResponse> login(AuthRequest req)
     {
-        User user = userService.authenticate(request.getEmail(), request.getPassword());
-        String token = jwtUtil.generateToken(user.getEmail());
-        return ResponseEntity.ok(new AuthResponse(token, user.getEmail()));
+        User u=repo.findByEmail(req.getEmail()).orElseThrow();
+        if(!encoder.matches(req.getPassword(),u.getPassword()))
+            throw new RuntimeException();
+
+        Map<String,Object> claims=new HashMap<>();
+        claims.put("email",u.getEmail());
+        claims.put("role",u.getRole());
+        claims.put("userId",u.getId());
+
+        String token=util.generateToken(claims,u.getEmail());
+        return ResponseEntity.ok(new AuthResponse(token,u.getEmail()));
     }
 }

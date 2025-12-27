@@ -1,54 +1,40 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.LoanRequest;
-import com.example.demo.repository.LoanRequestRepository;
-import com.example.demo.repository.UserRepository;
-import com.example.demo.service.LoanRequestService;
-import org.springframework.stereotype.Service;
+import com.example.demo.repository.*;
+import com.example.demo.entity.*;
+import com.example.demo.exception.*;
+import java.time.*;
+import java.util.*;
 
-import java.util.List;
-
-@Service
-public class LoanRequestServiceImpl implements LoanRequestService
+public class LoanRequestServiceImpl
 {
-    private LoanRequestRepository loanRequestRepository;
-    private UserRepository userRepository;
+    private final LoanRequestRepository repo;
+    private final UserRepository userRepo;
 
-    // REQUIRED by Spring
-    public LoanRequestServiceImpl()
+    public LoanRequestServiceImpl(LoanRequestRepository r, UserRepository u)
     {
+        repo=r; userRepo=u;
     }
 
-    // Used by tests
-    public LoanRequestServiceImpl(LoanRequestRepository loanRequestRepository)
+    public LoanRequest submitRequest(LoanRequest lr)
     {
-        this.loanRequestRepository = loanRequestRepository;
+        if(lr.getRequestedAmount()==null || lr.getRequestedAmount()<=0)
+            throw new BadRequestException("Invalid amount");
+
+        userRepo.findById(lr.getUser().getId()).orElseThrow();
+
+        lr.setStatus(LoanRequest.Status.PENDING.name());
+        lr.setSubmittedAt(LocalDateTime.now());
+        return repo.save(lr);
     }
 
-    // Used by tests
-    public LoanRequestServiceImpl(
-            LoanRequestRepository loanRequestRepository,
-            UserRepository userRepository)
+    public List<LoanRequest> getRequestsByUser(Long id)
     {
-        this.loanRequestRepository = loanRequestRepository;
-        this.userRepository = userRepository;
+        return repo.findByUserId(id);
     }
 
-    @Override
-    public LoanRequest submitRequest(LoanRequest request)
-    {
-        return loanRequestRepository.save(request);
-    }
-
-    @Override
-    public List<LoanRequest> getRequestsByUser(Long userId)
-    {
-        return loanRequestRepository.findByUserId(userId);
-    }
-
-    @Override
     public LoanRequest getById(Long id)
     {
-        return loanRequestRepository.findById(id).orElse(null);
+        return repo.findById(id).orElse(null);
     }
 }
