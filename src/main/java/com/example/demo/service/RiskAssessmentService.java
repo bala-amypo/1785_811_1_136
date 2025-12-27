@@ -1,9 +1,33 @@
-package com.example.demo.service;
+package com.example.demo.entity;
 
-import com.example.demo.entity.RiskAssessment;
+import jakarta.persistence.*;
 
-public interface RiskAssessmentService
+@Entity
+public class RiskAssessment
 {
-    RiskAssessment assessRisk(Long loanRequestId);
-    RiskAssessment getByLoanRequestId(Long loanRequestId);
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private Long loanRequestId;
+
+    public Long getId()
+    {
+        return id;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
+    public Long getLoanRequestId()
+    {
+        return loanRequestId;
+    }
+
+    public void setLoanRequestId(Long loanRequestId)
+    {
+        this.loanRequestId = loanRequestId;
+    }
 }
