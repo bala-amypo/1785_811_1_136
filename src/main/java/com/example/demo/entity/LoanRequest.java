@@ -4,80 +4,74 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class LoanRequest {
-
-    public enum Status {
-        PENDING,
-        APPROVED,
-        REJECTED
-    }
-
+public class LoanRequest
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
+    private Long userId;
     private Double requestedAmount;
     private Integer tenureMonths;
     private String status;
     private LocalDateTime submittedAt;
 
-    @PrePersist
-    public void onCreate() {
-        this.submittedAt = LocalDateTime.now();
-        if (this.status == null) {
-            this.status = Status.PENDING.name();
-        }
-    }
-
-    public Long getId() {
+    public Long getId()
+    {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long id)
+    {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId()
+    {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId)
+    {
+        this.userId = userId;
     }
 
-    public Double getRequestedAmount() {
+    public Double getRequestedAmount()
+    {
         return requestedAmount;
     }
 
-    public void setRequestedAmount(Double requestedAmount) {
+    public void setRequestedAmount(Double requestedAmount)
+    {
         this.requestedAmount = requestedAmount;
     }
 
-    public Integer getTenureMonths() {
+    public Integer getTenureMonths()
+    {
         return tenureMonths;
     }
 
-    public void setTenureMonths(Integer tenureMonths) {
+    public void setTenureMonths(Integer tenureMonths)
+    {
         this.tenureMonths = tenureMonths;
     }
 
-    public String getStatus() {
+    public String getStatus()
+    {
         return status;
     }
 
-    public void setStatus(Status status) {
-        this.status = status.name();
+    public void setStatus(String status)
+    {
+        this.status = status;
     }
 
-    public LocalDateTime getSubmittedAt() {
+    public LocalDateTime getSubmittedAt()
+    {
         return submittedAt;
     }
 
-    public void setSubmittedAt(LocalDateTime submittedAt) {
+    public void setSubmittedAt(LocalDateTime submittedAt)
+    {
         this.submittedAt = submittedAt;
     }
 }

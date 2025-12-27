@@ -3,22 +3,13 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "eligibility_result")
 public class EligibilityResult
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "loan_request_id")
-    private LoanRequest loanRequest;
-
+    private Long loanRequestId;
     private Double maxEligibleAmount;
-
-    public EligibilityResult()
-    {
-    }
 
     public Long getId()
     {
@@ -30,14 +21,14 @@ public class EligibilityResult
         this.id = id;
     }
 
-    public LoanRequest getLoanRequest()
+    public Long getLoanRequestId()
     {
-        return loanRequest;
+        return loanRequestId;
     }
 
-    public void setLoanRequest(LoanRequest loanRequest)
+    public void setLoanRequestId(Long loanRequestId)
     {
-        this.loanRequest = loanRequest;
+        this.loanRequestId = loanRequestId;
     }
 
     public Double getMaxEligibleAmount()

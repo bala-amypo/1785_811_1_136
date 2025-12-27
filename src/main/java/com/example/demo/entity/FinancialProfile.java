@@ -4,91 +4,96 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class FinancialProfile {
-
+public class FinancialProfile
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false, unique = true)
-    private User user;
-
+    private Long userId;
     private Double monthlyIncome;
     private Double monthlyExpenses;
     private Double existingLoanEmi;
     private Integer creditScore;
     private Double savingsBalance;
-
     private LocalDateTime lastUpdatedAt;
 
-    @PrePersist
-    @PreUpdate
-    public void touch() {
-        this.lastUpdatedAt = LocalDateTime.now();
-    }
-
-    public Long getId() {
+    public Long getId()
+    {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long id)
+    {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId()
+    {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId)
+    {
+        this.userId = userId;
     }
 
-    public Double getMonthlyIncome() {
+    public Double getMonthlyIncome()
+    {
         return monthlyIncome;
     }
 
-    public void setMonthlyIncome(Double monthlyIncome) {
+    public void setMonthlyIncome(Double monthlyIncome)
+    {
         this.monthlyIncome = monthlyIncome;
     }
 
-    public Double getMonthlyExpenses() {
+    public Double getMonthlyExpenses()
+    {
         return monthlyExpenses;
     }
 
-    public void setMonthlyExpenses(Double monthlyExpenses) {
+    public void setMonthlyExpenses(Double monthlyExpenses)
+    {
         this.monthlyExpenses = monthlyExpenses;
     }
 
-    public Double getExistingLoanEmi() {
+    public Double getExistingLoanEmi()
+    {
         return existingLoanEmi;
     }
 
-    public void setExistingLoanEmi(Double existingLoanEmi) {
+    public void setExistingLoanEmi(Double existingLoanEmi)
+    {
         this.existingLoanEmi = existingLoanEmi;
     }
 
-    public Integer getCreditScore() {
+    public Integer getCreditScore()
+    {
         return creditScore;
     }
 
-    public void setCreditScore(Integer creditScore) {
+    public void setCreditScore(Integer creditScore)
+    {
         this.creditScore = creditScore;
     }
 
-    public Double getSavingsBalance() {
+    public Double getSavingsBalance()
+    {
         return savingsBalance;
     }
 
-    public void setSavingsBalance(Double savingsBalance) {
+    public void setSavingsBalance(Double savingsBalance)
+    {
         this.savingsBalance = savingsBalance;
     }
 
-    public LocalDateTime getLastUpdatedAt() {
+    public LocalDateTime getLastUpdatedAt()
+    {
         return lastUpdatedAt;
     }
 
-    public void setLastUpdatedAt(LocalDateTime lastUpdatedAt) {
+    public void setLastUpdatedAt(LocalDateTime lastUpdatedAt)
+    {
         this.lastUpdatedAt = lastUpdatedAt;
     }
 }
