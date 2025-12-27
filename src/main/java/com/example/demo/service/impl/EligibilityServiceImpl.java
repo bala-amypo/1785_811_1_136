@@ -4,40 +4,44 @@ import com.example.demo.entity.EligibilityResult;
 import com.example.demo.entity.LoanRequest;
 import com.example.demo.repository.EligibilityResultRepository;
 import com.example.demo.repository.LoanRequestRepository;
-import com.example.demo.service.EligibilityService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
-public class EligibilityServiceImpl implements EligibilityService
+public class EligibilityServiceImpl
 {
-    @Autowired
-    private EligibilityResultRepository eligibilityResultRepository;
 
-    @Autowired
-    private LoanRequestRepository loanRequestRepository;
+    private final LoanRequestRepository loanRequestRepository;
+    private final EligibilityResultRepository eligibilityResultRepository;
 
-    @Override
-    public EligibilityResult checkEligibility(Long loanRequestId)
+    public EligibilityServiceImpl(
+            LoanRequestRepository loanRequestRepository,
+            EligibilityResultRepository eligibilityResultRepository
+    )
     {
-        LoanRequest loanRequest = loanRequestRepository.findById(loanRequestId).orElse(null);
-        if(loanRequest == null)
-        {
-            return null;
-        }
-        EligibilityResult result = eligibilityResultRepository.findByLoanRequestId(loanRequestId).orElse(null);
-        if(result == null)
-        {
-            result = new EligibilityResult();
-            result.setLoanRequestId(loanRequestId);
-            result.setMaxEligibleAmount(loanRequest.getRequestedAmount());
-        }
-        return eligibilityResultRepository.save(result);
+        this.loanRequestRepository = loanRequestRepository;
+        this.eligibilityResultRepository = eligibilityResultRepository;
     }
 
-    @Override
-    public EligibilityResult getByLoanRequestId(Long loanRequestId)
+    public EligibilityResult calculateEligibility(Long loanRequestId)
     {
-        return eligibilityResultRepository.findByLoanRequestId(loanRequestId).orElse(null);
+        LoanRequest loanRequest = loanRequestRepository
+                .findById(loanRequestId)
+                .orElseThrow(() -> new RuntimeException("LoanRequest not found"));
+
+        Optional<EligibilityResult> existing =
+                eligibilityResultRepository.findByLoanRequestId(loanRequestId);
+
+        if (existing.isPresent())
+        {
+            return existing.get();
+        }
+
+        EligibilityResult result = new EligibilityResult();
+        result.setLoanRequestId(loanRequestId);
+        result.setMaxEligibleAmount(loanRequest.getRequestedAmount());
+
+        return eligibilityResultRepository.save(result);
     }
 }
