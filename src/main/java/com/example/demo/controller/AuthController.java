@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class AuthController
 {
-    private final UserService userService;
-    private final JwtUtil jwtUtil;
+    private UserService userService;
+    private JwtUtil jwtUtil;
 
     public AuthController(UserService userService, JwtUtil jwtUtil)
     {
@@ -24,11 +24,7 @@ public class AuthController
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request)
     {
-        User user = userService.findByEmail(request.getEmail()).orElse(null);
-        if (user == null)
-        {
-            return ResponseEntity.status(401).build();
-        }
+        User user = userService.authenticate(request.getEmail(), request.getPassword());
         String token = jwtUtil.generateToken(user.getEmail());
         return ResponseEntity.ok(new AuthResponse(token, user.getEmail()));
     }

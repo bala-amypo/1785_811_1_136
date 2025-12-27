@@ -5,21 +5,22 @@ import jakarta.persistence.*;
 @Entity
 public class User
 {
+    public enum Role
+    {
+        USER,
+        ADMIN
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String email;
-    private String fullName;
+
+    private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    public enum Role
-    {
-        CUSTOMER,
-        ADMIN
-    }
 
     public Long getId()
     {
@@ -41,14 +42,14 @@ public class User
         this.email = email;
     }
 
-    public String getFullName()
+    public String getPassword()
     {
-        return fullName;
+        return password;
     }
 
-    public void setFullName(String fullName)
+    public void setPassword(String password)
     {
-        this.fullName = fullName;
+        this.password = password;
     }
 
     public Role getRole()

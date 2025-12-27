@@ -11,6 +11,10 @@ public class RiskAssessment
 
     private Long loanRequestId;
 
+    private int riskScore;
+
+    private double dtiRatio;
+
     public Long getId()
     {
         return id;
@@ -29,5 +33,25 @@ public class RiskAssessment
     public void setLoanRequestId(Long loanRequestId)
     {
         this.loanRequestId = loanRequestId;
+    }
+
+    public int getRiskScore()
+    {
+        return riskScore;
+    }
+
+    public void setRiskScore(int riskScore)
+    {
+        this.riskScore = riskScore;
+    }
+
+    public double getDtiRatio()
+    {
+        return dtiRatio;
+    }
+
+    public void setDtiRatio(double dtiRatio)
+    {
+        this.dtiRatio = dtiRatio;
     }
 }

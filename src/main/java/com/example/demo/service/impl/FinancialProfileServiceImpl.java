@@ -23,4 +23,9 @@ public class FinancialProfileServiceImpl {
         fp.setLastUpdatedAt(LocalDateTime.now());
         return fp;
     }
+    public FinancialProfile getByUserId(long userId)
+    {
+        return financialProfileRepository.findByUserId(userId).orElse(null);
+    }
+
 }
