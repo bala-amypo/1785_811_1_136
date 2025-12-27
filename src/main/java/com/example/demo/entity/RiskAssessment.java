@@ -1,57 +1,21 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
-
-@Entity
 public class RiskAssessment
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private LoanRequest loanRequest;
+    private Double riskScore;
+    private Double dtiRatio;
 
-    private Long loanRequestId;
+    public Long getId(){return id;}
+    public void setId(Long id){this.id=id;}
 
-    private int riskScore;
+    public LoanRequest getLoanRequest(){return loanRequest;}
+    public void setLoanRequest(LoanRequest loanRequest){this.loanRequest=loanRequest;}
 
-    private double dtiRatio;
+    public Double getRiskScore(){return riskScore;}
+    public void setRiskScore(Double riskScore){this.riskScore=riskScore;}
 
-    public Long getId()
-    {
-        return id;
-    }
-
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
-
-    public Long getLoanRequestId()
-    {
-        return loanRequestId;
-    }
-
-    public void setLoanRequestId(Long loanRequestId)
-    {
-        this.loanRequestId = loanRequestId;
-    }
-
-    public int getRiskScore()
-    {
-        return riskScore;
-    }
-
-    public void setRiskScore(int riskScore)
-    {
-        this.riskScore = riskScore;
-    }
-
-    public double getDtiRatio()
-    {
-        return dtiRatio;
-    }
-
-    public void setDtiRatio(double dtiRatio)
-    {
-        this.dtiRatio = dtiRatio;
-    }
+    public Double getDtiRatio(){return dtiRatio;}
+    public void setDtiRatio(Double dtiRatio){this.dtiRatio=dtiRatio;}
 }
