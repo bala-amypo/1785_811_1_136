@@ -3,52 +3,49 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
-public class RiskAssessment
-{
+public class RiskAssessment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long loanRequestId;
+
     private Double riskScore;
+
     private Double dtiRatio;
 
-    public Long getId()
-    {
+    @OneToOne
+    @JoinColumn(name = "loan_request_id")
+    private LoanRequest loanRequest;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Long id)
-    {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getLoanRequestId()
-    {
-        return loanRequestId;
-    }
-
-    public void setLoanRequestId(Long loanRequestId)
-    {
-        this.loanRequestId = loanRequestId;
-    }
-
-    public Double getRiskScore()
-    {
+    public Double getRiskScore() {
         return riskScore;
     }
 
-    public void setRiskScore(Double riskScore)
-    {
+    public void setRiskScore(Double riskScore) {
         this.riskScore = riskScore;
     }
 
-    public Double getDtiRatio()
-    {
+    public Double getDtiRatio() {
         return dtiRatio;
     }
 
-    public void setDtiRatio(Double dtiRatio)
-    {
+    public void setDtiRatio(Double dtiRatio) {
         this.dtiRatio = dtiRatio;
+    }
+
+    public LoanRequest getLoanRequest() {
+        return loanRequest;
+    }
+
+    public void setLoanRequest(LoanRequest loanRequest) {
+        this.loanRequest = loanRequest;
     }
 }

@@ -3,24 +3,19 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@Table(name = "users")
 public class User {
-
-    public enum Role {
-        CUSTOMER,
-        ADMIN
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String fullName;
-
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String email;
 
     private String password;
+
+    private String fullName;
 
     private String role;
 
@@ -30,14 +25,6 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     public String getEmail() {
@@ -54,6 +41,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getRole() {

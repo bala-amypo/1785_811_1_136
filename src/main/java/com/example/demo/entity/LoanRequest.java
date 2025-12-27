@@ -4,10 +4,9 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class LoanRequest
-{
-    public enum Status
-    {
+public class LoanRequest {
+
+    public enum Status {
         PENDING,
         APPROVED,
         REJECTED
@@ -16,72 +15,70 @@ public class LoanRequest
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long userId;
+
     private Double requestedAmount;
+
     private Integer tenureMonths;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    private String status;
 
     private LocalDateTime submittedAt;
 
-    public Long getId()
-    {
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @PrePersist
+    public void onCreate() {
+        this.submittedAt = LocalDateTime.now();
+        this.status = Status.PENDING.name();
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Long id)
-    {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getUserId()
-    {
-        return userId;
-    }
-
-    public void setUserId(Long userId)
-    {
-        this.userId = userId;
-    }
-
-    public Double getRequestedAmount()
-    {
+    public Double getRequestedAmount() {
         return requestedAmount;
     }
 
-    public void setRequestedAmount(Double requestedAmount)
-    {
+    public void setRequestedAmount(Double requestedAmount) {
         this.requestedAmount = requestedAmount;
     }
 
-    public Integer getTenureMonths()
-    {
+    public Integer getTenureMonths() {
         return tenureMonths;
     }
 
-    public void setTenureMonths(Integer tenureMonths)
-    {
+    public void setTenureMonths(Integer tenureMonths) {
         this.tenureMonths = tenureMonths;
     }
 
-    public Status getStatus()
-    {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status)
-    {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public LocalDateTime getSubmittedAt()
-    {
+    public LocalDateTime getSubmittedAt() {
         return submittedAt;
     }
 
-    public void setSubmittedAt(LocalDateTime submittedAt)
-    {
+    public void setSubmittedAt(LocalDateTime submittedAt) {
         this.submittedAt = submittedAt;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
