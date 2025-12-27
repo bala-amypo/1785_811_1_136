@@ -9,8 +9,9 @@ public class FinancialProfile
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
+    private long userId;
     private double monthlyIncome;
+    private double monthlyExpenses;
     private int creditScore;
 
     public Long getId()
@@ -23,12 +24,12 @@ public class FinancialProfile
         this.id = id;
     }
 
-    public Long getUserId()
+    public long getUserId()
     {
         return userId;
     }
 
-    public void setUserId(Long userId)
+    public void setUserId(long userId)
     {
         this.userId = userId;
     }
@@ -41,6 +42,16 @@ public class FinancialProfile
     public void setMonthlyIncome(double monthlyIncome)
     {
         this.monthlyIncome = monthlyIncome;
+    }
+
+    public double getMonthlyExpenses()
+    {
+        return monthlyExpenses;
+    }
+
+    public void setMonthlyExpenses(double monthlyExpenses)
+    {
+        this.monthlyExpenses = monthlyExpenses;
     }
 
     public int getCreditScore()

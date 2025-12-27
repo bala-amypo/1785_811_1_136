@@ -1,16 +1,19 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-public class RiskAssessmentLog
+public class RiskAssessment
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
+    private long userId;
     private String riskLevel;
+    private String remarks;
+    private LocalDateTime assessedAt;
 
     public Long getId()
     {
@@ -22,12 +25,12 @@ public class RiskAssessmentLog
         this.id = id;
     }
 
-    public Long getUserId()
+    public long getUserId()
     {
         return userId;
     }
 
-    public void setUserId(Long userId)
+    public void setUserId(long userId)
     {
         this.userId = userId;
     }
@@ -40,5 +43,25 @@ public class RiskAssessmentLog
     public void setRiskLevel(String riskLevel)
     {
         this.riskLevel = riskLevel;
+    }
+
+    public String getRemarks()
+    {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks)
+    {
+        this.remarks = remarks;
+    }
+
+    public LocalDateTime getAssessedAt()
+    {
+        return assessedAt;
+    }
+
+    public void setAssessedAt(LocalDateTime assessedAt)
+    {
+        this.assessedAt = assessedAt;
     }
 }
