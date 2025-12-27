@@ -1,19 +1,22 @@
-package com.example.demo.service.impl;
-
-import com.example.demo.entity.RiskAssessment;
-import com.example.demo.repository.RiskAssessmentRepository;
-import org.springframework.stereotype.Service;
-
 @Service
-public class RiskAssessmentServiceImpl {
+public class RiskAssessmentServiceImpl implements RiskAssessmentService {
 
-    private final RiskAssessmentRepository repository;
+    private final LoanRequestRepository loanRequestRepository;
+    private final FinancialProfileRepository financialProfileRepository;
+    private final RiskAssessmentRepository riskAssessmentRepository;
 
-    public RiskAssessmentServiceImpl(RiskAssessmentRepository repository) {
-        this.repository = repository;
+    public RiskAssessmentServiceImpl(
+            LoanRequestRepository loanRequestRepository,
+            FinancialProfileRepository financialProfileRepository,
+            RiskAssessmentRepository riskAssessmentRepository
+    ) {
+        this.loanRequestRepository = loanRequestRepository;
+        this.financialProfileRepository = financialProfileRepository;
+        this.riskAssessmentRepository = riskAssessmentRepository;
     }
 
-    public RiskAssessment assessRisk(long loanRequestId) {
-        return repository.findByLoanRequestId(loanRequestId).orElse(null);
+    @Override
+    public RiskAssessment getByLoanRequestId(long loanRequestId) {
+        return riskAssessmentRepository.findByLoanRequestId(loanRequestId);
     }
 }
