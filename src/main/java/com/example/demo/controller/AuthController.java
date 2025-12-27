@@ -22,6 +22,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public String login(@RequestBody AuthRequest request) {
-        return jwtUtil.generateToken(request.getEmail());
+        return jwtUtil.generateToken(new java.util.HashMap<>(), request.getEmail());
     }
+
 }
