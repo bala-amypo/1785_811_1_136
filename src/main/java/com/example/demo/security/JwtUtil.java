@@ -12,41 +12,34 @@ import java.util.Map;
 @Component
 public class JwtUtil {
 
-    private String secretKey = "demo-secret-key";
-    private int expiryMinutes = 60;
+    private final String secret = "test-secret-key";
+    private final long expirationMs = 3600000;
 
     public JwtUtil() {
     }
 
-    public JwtUtil(String secretKey, int expiryMinutes) {
-        this.secretKey = secretKey;
-        this.expiryMinutes = expiryMinutes;
+    public JwtUtil(String secret, int expirationMs) {
+        this.secret = secret;
+        this.expirationMs = expirationMs;
     }
 
-    public String generateToken(String username) {
-        Map<String, Object> claims = new HashMap<>();
-        return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(username)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + expiryMinutes * 60L * 1000L))
-                .signWith(SignatureAlgorithm.HS256, secretKey)
-                .compact();
+    public String generateToken(String subject) {
+        return generateToken(new HashMap<>(), subject);
     }
 
     public String generateToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + expiryMinutes * 60L * 1000L))
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
+                .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
 
     public Claims getAllClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(secretKey)
+                .setSigningKey(secret)
                 .parseClaimsJws(token)
                 .getBody();
     }
