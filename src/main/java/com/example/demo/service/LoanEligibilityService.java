@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-public interface EligibilityService
+public interface LoanEligibilityService
 {
     boolean checkEligibility(long userId);
 }
