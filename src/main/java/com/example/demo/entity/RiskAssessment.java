@@ -12,7 +12,6 @@ public class RiskAssessment
     private Long loanRequestId;
     private int riskScore;
     private double dtiRatio;
-    private String riskLevel;
 
     public Long getId()
     {
@@ -52,15 +51,5 @@ public class RiskAssessment
     public void setDtiRatio(double dtiRatio)
     {
         this.dtiRatio = dtiRatio;
-    }
-
-    public String getRiskLevel()
-    {
-        return riskLevel;
-    }
-
-    public void setRiskLevel(String riskLevel)
-    {
-        this.riskLevel = riskLevel;
     }
 }
