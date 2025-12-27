@@ -6,13 +6,23 @@ import java.time.LocalDateTime;
 @Entity
 public class LoanRequest
 {
+    public enum Status
+    {
+        PENDING,
+        APPROVED,
+        REJECTED
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long userId;
     private Double requestedAmount;
     private Integer tenureMonths;
-    private String status;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     private LocalDateTime submittedAt;
 
     public Long getId()
@@ -55,12 +65,12 @@ public class LoanRequest
         this.tenureMonths = tenureMonths;
     }
 
-    public String getStatus()
+    public Status getStatus()
     {
         return status;
     }
 
-    public void setStatus(String status)
+    public void setStatus(Status status)
     {
         this.status = status;
     }
