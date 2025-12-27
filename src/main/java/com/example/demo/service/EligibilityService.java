@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.EligibilityResult;
-
 import java.util.Optional;
 
 public interface EligibilityService {
