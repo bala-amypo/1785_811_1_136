@@ -74,6 +74,19 @@
             <version>7.8.0</version>
             <scope>test</scope>
         </dependency>
+		<!-- JAXB (required for JJWT on Java 11+) -->
+		<dependency>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
+			<version>4.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+			<version>4.0.4</version>
+		</dependency>
+
     </dependencies>
 
 	<build>
