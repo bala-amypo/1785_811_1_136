@@ -3,54 +3,53 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
-public class FinancialProfile {
-
+public class FinancialProfile
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long userId;
     private double monthlyIncome;
-    private double monthlyExpenses;
     private int creditScore;
 
-    public Long getId() {
+    public Long getId()
+    {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long id)
+    {
         this.id = id;
     }
 
-    public Long getUserId() {
+    public Long getUserId()
+    {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(Long userId)
+    {
         this.userId = userId;
     }
 
-    public double getMonthlyIncome() {
+    public double getMonthlyIncome()
+    {
         return monthlyIncome;
     }
 
-    public void setMonthlyIncome(double monthlyIncome) {
+    public void setMonthlyIncome(double monthlyIncome)
+    {
         this.monthlyIncome = monthlyIncome;
     }
 
-    public double getMonthlyExpenses() {
-        return monthlyExpenses;
-    }
-
-    public void setMonthlyExpenses(double monthlyExpenses) {
-        this.monthlyExpenses = monthlyExpenses;
-    }
-
-    public int getCreditScore() {
+    public int getCreditScore()
+    {
         return creditScore;
     }
 
-    public void setCreditScore(int creditScore) {
+    public void setCreditScore(int creditScore)
+    {
         this.creditScore = creditScore;
     }
 }

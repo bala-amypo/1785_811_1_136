@@ -4,63 +4,75 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class LoanRequest {
-
+public class LoanRequest
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long userId;
     private double requestedAmount;
     private int tenureMonths;
-
-    @Enumerated(EnumType.STRING)
-    private Status status;
-
+    private String status;
     private LocalDateTime submittedAt;
 
-    public enum Status {
-        PENDING,
-        APPROVED,
-        REJECTED
-    }
-
-    public Long getId() {
+    public Long getId()
+    {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long id)
+    {
         this.id = id;
     }
 
-    public double getRequestedAmount() {
+    public Long getUserId()
+    {
+        return userId;
+    }
+
+    public void setUserId(Long userId)
+    {
+        this.userId = userId;
+    }
+
+    public double getRequestedAmount()
+    {
         return requestedAmount;
     }
 
-    public void setRequestedAmount(double requestedAmount) {
+    public void setRequestedAmount(double requestedAmount)
+    {
         this.requestedAmount = requestedAmount;
     }
 
-    public int getTenureMonths() {
+    public int getTenureMonths()
+    {
         return tenureMonths;
     }
 
-    public void setTenureMonths(int tenureMonths) {
+    public void setTenureMonths(int tenureMonths)
+    {
         this.tenureMonths = tenureMonths;
     }
 
-    public Status getStatus() {
+    public String getStatus()
+    {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status)
+    {
         this.status = status;
     }
 
-    public LocalDateTime getSubmittedAt() {
+    public LocalDateTime getSubmittedAt()
+    {
         return submittedAt;
     }
 
-    public void setSubmittedAt(LocalDateTime submittedAt) {
+    public void setSubmittedAt(LocalDateTime submittedAt)
+    {
         this.submittedAt = submittedAt;
     }
 }
