@@ -3,39 +3,64 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "risk_assessments")
-public class RiskAssessment {
-
+public class RiskAssessment
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private Long loanRequestId;
-
-    @Column(nullable = false)
+    private int riskScore;
+    private double dtiRatio;
     private String riskLevel;
 
-    public RiskAssessment() {
-    }
-
-    public Long getId() {
+    public Long getId()
+    {
         return id;
     }
 
-    public Long getLoanRequestId() {
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
+    public Long getLoanRequestId()
+    {
         return loanRequestId;
     }
 
-    public void setLoanRequestId(Long loanRequestId) {
+    public void setLoanRequestId(Long loanRequestId)
+    {
         this.loanRequestId = loanRequestId;
     }
 
-    public String getRiskLevel() {
+    public int getRiskScore()
+    {
+        return riskScore;
+    }
+
+    public void setRiskScore(int riskScore)
+    {
+        this.riskScore = riskScore;
+    }
+
+    public double getDtiRatio()
+    {
+        return dtiRatio;
+    }
+
+    public void setDtiRatio(double dtiRatio)
+    {
+        this.dtiRatio = dtiRatio;
+    }
+
+    public String getRiskLevel()
+    {
         return riskLevel;
     }
 
-    public void setRiskLevel(String riskLevel) {
+    public void setRiskLevel(String riskLevel)
+    {
         this.riskLevel = riskLevel;
     }
 }
