@@ -17,6 +17,7 @@ public class LoanRequest {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     private Double requestedAmount;
@@ -26,9 +27,9 @@ public class LoanRequest {
 
     @PrePersist
     public void onCreate() {
-        submittedAt = LocalDateTime.now();
-        if (status == null) {
-            status = Status.PENDING.name();
+        this.submittedAt = LocalDateTime.now();
+        if (this.status == null) {
+            this.status = Status.PENDING.name();
         }
     }
 
@@ -68,7 +69,15 @@ public class LoanRequest {
         return status;
     }
 
+    public void setStatus(Status status) {
+        this.status = status.name();
+    }
+
     public LocalDateTime getSubmittedAt() {
         return submittedAt;
+    }
+
+    public void setSubmittedAt(LocalDateTime submittedAt) {
+        this.submittedAt = submittedAt;
     }
 }

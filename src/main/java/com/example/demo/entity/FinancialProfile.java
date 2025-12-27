@@ -11,6 +11,7 @@ public class FinancialProfile {
     private Long id;
 
     @OneToOne
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
     private Double monthlyIncome;
@@ -24,7 +25,7 @@ public class FinancialProfile {
     @PrePersist
     @PreUpdate
     public void touch() {
-        lastUpdatedAt = LocalDateTime.now();
+        this.lastUpdatedAt = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -85,5 +86,9 @@ public class FinancialProfile {
 
     public LocalDateTime getLastUpdatedAt() {
         return lastUpdatedAt;
+    }
+
+    public void setLastUpdatedAt(LocalDateTime lastUpdatedAt) {
+        this.lastUpdatedAt = lastUpdatedAt;
     }
 }
