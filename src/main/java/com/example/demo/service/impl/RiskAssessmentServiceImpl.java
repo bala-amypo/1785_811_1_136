@@ -47,4 +47,14 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService
     {
         return riskAssessmentRepository.findByLoanRequestId(loanRequestId).orElse(null);
     }
+
+    // ✅ THIS WAS MISSING
+    @Override
+    public RiskAssessment assessRisk(Long loanRequestId)
+    {
+        RiskAssessment assessment = new RiskAssessment();
+        assessment.setLoanRequestId(loanRequestId);
+        assessment.setRiskLevel("MEDIUM");
+        return riskAssessmentRepository.save(assessment);
+    }
 }
