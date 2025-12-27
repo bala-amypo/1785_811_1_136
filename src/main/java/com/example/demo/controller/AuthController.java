@@ -8,8 +8,7 @@ import com.example.demo.security.JwtUtil;
 import com.example.demo.service.impl.UserServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class AuthController
 {
@@ -34,7 +33,7 @@ public class AuthController
             throw new RuntimeException("Invalid credentials");
         }
 
-        Map<String,Object> claims = new HashMap<>();
+        Map<String, Object> claims = new HashMap<>();
         claims.put("email", user.getEmail());
         claims.put("role", user.getRole());
         claims.put("userId", user.getId());
