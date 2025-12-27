@@ -1,78 +1,29 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
+public class LoanRequest {
 
-@Entity
-public class LoanRequest
-{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private Long userId;
-    private double requestedAmount;
-    private int tenureMonths;
-    private String status;
-    private LocalDateTime submittedAt;
-
-    public Long getId()
-    {
-        return id;
+    public enum Status {
+        PENDING,
+        APPROVED,
+        REJECTED
     }
 
-    public void setId(Long id)
-    {
-        this.id = id;
+    private User user;
+    private Status status;
+
+    public User getUser() {
+        return user;
     }
 
-    public Long getUserId()
-    {
-        return userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public void setUserId(Long userId)
-    {
-        this.userId = userId;
-    }
-
-    public double getRequestedAmount()
-    {
-        return requestedAmount;
-    }
-
-    public void setRequestedAmount(double requestedAmount)
-    {
-        this.requestedAmount = requestedAmount;
-    }
-
-    public int getTenureMonths()
-    {
-        return tenureMonths;
-    }
-
-    public void setTenureMonths(int tenureMonths)
-    {
-        this.tenureMonths = tenureMonths;
-    }
-
-    public String getStatus()
-    {
+    public Status getStatus() {
         return status;
     }
-
-    public void setStatus(String status)
-    {
+    
+    public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public LocalDateTime getSubmittedAt()
-    {
-        return submittedAt;
-    }
-
-    public void setSubmittedAt(LocalDateTime submittedAt)
-    {
-        this.submittedAt = submittedAt;
     }
 }

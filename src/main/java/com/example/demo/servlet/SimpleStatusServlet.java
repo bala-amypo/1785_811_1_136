@@ -10,7 +10,7 @@ import java.io.IOException;
 public class SimpleStatusServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException {
         response.getWriter().write("Application is running");
     }
 }

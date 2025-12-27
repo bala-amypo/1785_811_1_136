@@ -1,66 +1,43 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
-@Entity
-public class FinancialProfile
-{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class FinancialProfile {
 
-    private long userId;
-    private double monthlyIncome;
-    private double monthlyExpenses;
-    private int creditScore;
+    private User user;
+    private double savingsBalance;
+    private double existingLoanEmi;
+    private LocalDateTime lastUpdatedAt;
 
-    public Long getId()
-    {
-        return id;
+    public User getUser() {
+        return user;
     }
 
-    public void setId(Long id)
-    {
-        this.id = id;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public long getUserId()
-    {
-        return userId;
+    public double getSavingsBalance() {
+        return savingsBalance;
     }
 
-    public void setUserId(long userId)
-    {
-        this.userId = userId;
+    public void setSavingsBalance(double savingsBalance) {
+        this.savingsBalance = savingsBalance;
     }
 
-    public double getMonthlyIncome()
-    {
-        return monthlyIncome;
+    public double getExistingLoanEmi() {
+        return existingLoanEmi;
     }
 
-    public void setMonthlyIncome(double monthlyIncome)
-    {
-        this.monthlyIncome = monthlyIncome;
+    public void setExistingLoanEmi(double existingLoanEmi) {
+        this.existingLoanEmi = existingLoanEmi;
     }
 
-    public double getMonthlyExpenses()
-    {
-        return monthlyExpenses;
+    public LocalDateTime getLastUpdatedAt() {
+        return lastUpdatedAt;
     }
 
-    public void setMonthlyExpenses(double monthlyExpenses)
-    {
-        this.monthlyExpenses = monthlyExpenses;
-    }
-
-    public int getCreditScore()
-    {
-        return creditScore;
-    }
-
-    public void setCreditScore(int creditScore)
-    {
-        this.creditScore = creditScore;
+    public void setLastUpdatedAt(LocalDateTime lastUpdatedAt) {
+        this.lastUpdatedAt = lastUpdatedAt;
     }
 }
