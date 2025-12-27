@@ -4,6 +4,8 @@ import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl {
 
@@ -15,5 +17,13 @@ public class UserServiceImpl {
 
     public User register(User user) {
         return userRepository.save(user);
+    }
+
+    public User getById(long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }
