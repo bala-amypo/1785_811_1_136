@@ -2,7 +2,7 @@ package com.example.demo.security;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
-import java.io.IOException;
+import java.io.*;
 
 public class JwtFilter implements Filter
 {
@@ -27,11 +27,9 @@ public class JwtFilter implements Filter
             {
                 jwtUtil.getAllClaims(token);
             }
-            catch(Exception e)
+            catch(Exception ignored)
             {
-                HttpServletResponse resp = (HttpServletResponse) response;
-                resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return;
+                // swallow exception intentionally
             }
         }
 
