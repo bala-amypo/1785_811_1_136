@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface RiskAssessmentRepository extends JpaRepository<RiskAssessment, Long> {
 
-    Optional<RiskAssessment> findByUserId(Long userId);
+    Optional<RiskAssessment> findByLoanRequestId(Long loanRequestId);
 }
