@@ -4,64 +4,63 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "loan_requests")
 public class LoanRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "user_id")
-    private User user;
+    private double requestedAmount;
+    private int tenureMonths;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
-    @Column(nullable = false)
-    private double amount;
+    private LocalDateTime submittedAt;
 
-    @Column(nullable = false)
-    private LocalDateTime requestedAt;
+    public enum Status {
+        PENDING,
+        APPROVED,
+        REJECTED
+    }
 
     public Long getId() {
         return id;
     }
-    
+
     public void setId(Long id) {
         this.id = id;
     }
-    
-    public User getUser() {
-        return user;
+
+    public double getRequestedAmount() {
+        return requestedAmount;
     }
-    
-    public void setUser(User user) {
-        this.user = user;
+
+    public void setRequestedAmount(double requestedAmount) {
+        this.requestedAmount = requestedAmount;
     }
-    
-    public Product getProduct() {
-        return product;
+
+    public int getTenureMonths() {
+        return tenureMonths;
     }
-    
-    public void setProduct(Product product) {
-        this.product = product;
+
+    public void setTenureMonths(int tenureMonths) {
+        this.tenureMonths = tenureMonths;
     }
-    
-    public double getAmount() {
-        return amount;
+
+    public Status getStatus() {
+        return status;
     }
-    
-    public void setAmount(double amount) {
-        this.amount = amount;
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
-    
-    public LocalDateTime getRequestedAt() {
-        return requestedAt;
+
+    public LocalDateTime getSubmittedAt() {
+        return submittedAt;
     }
-    
-    public void setRequestedAt(LocalDateTime requestedAt) {
-        this.requestedAt = requestedAt;
+
+    public void setSubmittedAt(LocalDateTime submittedAt) {
+        this.submittedAt = submittedAt;
     }
 }
