@@ -15,3 +15,4 @@ public class SimpleStatusServlet extends HttpServlet {
         response.getWriter().write("Application is running");
     }
 }
+/home/coder/Workspace/demo/src/test
