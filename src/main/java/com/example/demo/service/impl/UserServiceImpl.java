@@ -3,15 +3,21 @@ package com.example.demo.service.impl;
 import com.example.demo.repository.*;
 import com.example.demo.entity.*;
 import com.example.demo.exception.*;
+import com.example.demo.service.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 import java.util.*;
 
-public class UserServiceImpl
+@Service
+public class UserServiceImpl implements UserService
 {
     private final UserRepository repo;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    public UserServiceImpl(UserRepository repo){this.repo=repo;}
+    public UserServiceImpl(UserRepository repo)
+    {
+        this.repo = repo;
+    }
 
     public User register(User u)
     {
@@ -24,7 +30,8 @@ public class UserServiceImpl
 
     public User getById(Long id)
     {
-        return repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        return repo.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
     public User findByEmail(String email)
