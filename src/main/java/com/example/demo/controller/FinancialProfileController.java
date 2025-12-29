@@ -16,9 +16,9 @@ public class FinancialProfileController
     }
 
     @PostMapping
-    public FinancialProfile save(@RequestBody FinancialProfile profile)
+    public FinancialProfile create(@RequestBody FinancialProfile profile)
     {
-        return financialProfileService.save(profile);
+        return financialProfileService.createFinancialProfile(profile);
     }
 
     @GetMapping("/user/{userId}")
