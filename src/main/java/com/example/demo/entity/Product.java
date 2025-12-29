@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "product")
 public class Product
 {
     @Id
@@ -10,9 +11,16 @@ public class Product
     private Long id;
 
     private String name;
-    private double interestRate;
-    private int maxTenureMonths;
-    private double maxAmount;
+
+    private Double maxAmount;
+
+    private Integer maxTenureMonths;
+
+    private Double interestRate;
+
+    public Product()
+    {
+    }
 
     public Long getId()
     {
@@ -34,33 +42,33 @@ public class Product
         this.name = name;
     }
 
-    public double getInterestRate()
-    {
-        return interestRate;
-    }
-
-    public void setInterestRate(double interestRate)
-    {
-        this.interestRate = interestRate;
-    }
-
-    public int getMaxTenureMonths()
-    {
-        return maxTenureMonths;
-    }
-
-    public void setMaxTenureMonths(int maxTenureMonths)
-    {
-        this.maxTenureMonths = maxTenureMonths;
-    }
-
-    public double getMaxAmount()
+    public Double getMaxAmount()
     {
         return maxAmount;
     }
 
-    public void setMaxAmount(double maxAmount)
+    public void setMaxAmount(Double maxAmount)
     {
         this.maxAmount = maxAmount;
+    }
+
+    public Integer getMaxTenureMonths()
+    {
+        return maxTenureMonths;
+    }
+
+    public void setMaxTenureMonths(Integer maxTenureMonths)
+    {
+        this.maxTenureMonths = maxTenureMonths;
+    }
+
+    public Double getInterestRate()
+    {
+        return interestRate;
+    }
+
+    public void setInterestRate(Double interestRate)
+    {
+        this.interestRate = interestRate;
     }
 }
