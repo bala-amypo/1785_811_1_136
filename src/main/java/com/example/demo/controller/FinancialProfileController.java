@@ -6,19 +6,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/financial-profile")
-public class FinancialProfileController
-{
+@RequestMapping("/financial-profiles")
+public class FinancialProfileController {
+
     private final FinancialProfileService financialProfileService;
 
-    public FinancialProfileController(FinancialProfileService financialProfileService)
-    {
+    public FinancialProfileController(FinancialProfileService financialProfileService) {
         this.financialProfileService = financialProfileService;
     }
 
-    @PostMapping("/{userId}")
-    public ResponseEntity<FinancialProfile> create(@PathVariable Long userId,@RequestBody FinancialProfile profile)
-    {
-        return ResponseEntity.ok(financialProfileService.createProfile(userId,profile));
+    @PostMapping
+    public ResponseEntity<FinancialProfile> createOrUpdate(@RequestBody FinancialProfile profile) {
+        FinancialProfile saved = financialProfileService.createOrUpdate(profile);
+        return ResponseEntity.ok(saved);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<FinancialProfile> getByUserId(@PathVariable Long userId) {
+        FinancialProfile fp = financialProfileService.getByUserId(userId);
+        return ResponseEntity.ok(fp);
     }
 }
