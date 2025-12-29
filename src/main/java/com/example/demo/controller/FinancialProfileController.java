@@ -2,28 +2,29 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.FinancialProfile;
 import com.example.demo.service.FinancialProfileService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/financial-profiles")
+@RequestMapping("/financial-profile")
 public class FinancialProfileController
 {
-    private final FinancialProfileService service;
+    private final FinancialProfileService financialProfileService;
 
-    public FinancialProfileController(FinancialProfileService service)
+    public FinancialProfileController(FinancialProfileService financialProfileService)
     {
-        this.service = service;
+        this.financialProfileService = financialProfileService;
     }
 
     @PostMapping
-    public FinancialProfile createOrUpdate(@RequestBody FinancialProfile profile)
+    public ResponseEntity<FinancialProfile> create(@RequestBody FinancialProfile profile)
     {
-        return service.getByUserId(profile.getUser().getId());
+        return ResponseEntity.ok(financialProfileService.createProfile(profile));
     }
 
     @GetMapping("/user/{userId}")
-    public FinancialProfile getByUser(@PathVariable Long userId)
+    public ResponseEntity<FinancialProfile> getByUser(@PathVariable Long userId)
     {
-        return service.getByUserId(userId);
+        return ResponseEntity.ok(financialProfileService.getLatestByUserId(userId));
     }
 }
