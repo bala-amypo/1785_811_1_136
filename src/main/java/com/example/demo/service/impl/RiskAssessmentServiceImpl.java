@@ -1,40 +1,32 @@
 package com.example.demo.service.impl;
-
-import com.example.demo.repository.*;
-import com.example.demo.entity.*;
-import com.example.demo.exception.*;
-
-public class RiskAssessmentServiceImpl
+import com.example.demo.entity.LoanRequest;
+import com.example.demo.entity.RiskAssessment;
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.repository.LoanRequestRepository;
+import com.example.demo.repository.RiskAssessmentRepository;
+import com.example.demo.service.RiskAssessmentService;
+import org.springframework.stereotype.Service;
+@Service
+public class RiskAssessmentServiceImpl implements RiskAssessmentService
 {
-    private final LoanRequestRepository loanRepo;
-    private final FinancialProfileRepository profileRepo;
-    private final RiskAssessmentRepository repo;
-
-    public RiskAssessmentServiceImpl(LoanRequestRepository l, FinancialProfileRepository f, RiskAssessmentRepository r)
+    private final RiskAssessmentRepository repository;
+    private final LoanRequestRepository loanRequestRepository;
+    public RiskAssessmentServiceImpl(RiskAssessmentRepository repository,LoanRequestRepository loanRequestRepository)
     {
-        loanRepo=l; profileRepo=f; repo=r;
+        this.repository=repository;
+        this.loanRequestRepository=loanRequestRepository;
     }
-
-    public RiskAssessment assessRisk(Long id)
+    @Override
+    public RiskAssessment assess(Long loanRequestId)
     {
-        if(repo.findByLoanRequestId(id).isPresent())
-            throw new BadRequestException("Already assessed");
-
-        LoanRequest lr = loanRepo.findById(id).orElseThrow();
-        FinancialProfile fp = profileRepo.findByUserId(lr.getUser().getId()).orElseThrow();
-
-        double income = fp.getMonthlyIncome()==0 ? 1 : fp.getMonthlyIncome();
-        double dti = fp.getExistingLoanEmi()/income;
-
-        RiskAssessment ra = new RiskAssessment();
-        ra.setLoanRequest(lr);
-        ra.setDtiRatio(fp.getMonthlyIncome()==0?0.0:dti);
-        ra.setRiskScore(Math.min(100, Math.max(0, (1-dti)*100)));
-        return repo.save(ra);
-    }
-
-    public RiskAssessment getByLoanRequestId(Long id)
-    {
-        return repo.findByLoanRequestId(id).orElseThrow();
+        if(repository.findByLoanRequestId(loanRequestId).isPresent())
+        {
+            return repository.findByLoanRequestId(loanRequestId).get();
+        }
+        LoanRequest request=loanRequestRepository.findById(loanRequestId).orElseThrow(() -> new ResourceNotFoundException("Loan not found"));
+        RiskAssessment risk=new RiskAssessment();
+        risk.setLoanRequest(request);
+        risk.setRiskLevel("LOW");
+        return repository.save(risk);
     }
 }

@@ -1,40 +1,37 @@
 package com.example.demo.service.impl;
-
-import com.example.demo.repository.*;
-import com.example.demo.entity.*;
-import com.example.demo.exception.*;
-import java.time.*;
-import java.util.*;
-
-public class LoanRequestServiceImpl
+import com.example.demo.entity.LoanRequest;
+import com.example.demo.entity.User;
+import com.example.demo.exception.BadRequestException;
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.repository.LoanRequestRepository;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.LoanRequestService;
+import org.springframework.stereotype.Service;
+import java.util.List;
+@Service
+public class LoanRequestServiceImpl implements LoanRequestService
 {
-    private final LoanRequestRepository repo;
-    private final UserRepository userRepo;
-
-    public LoanRequestServiceImpl(LoanRequestRepository r, UserRepository u)
+    private final LoanRequestRepository repository;
+    private final UserRepository userRepository;
+    public LoanRequestServiceImpl(LoanRequestRepository repository,UserRepository userRepository)
     {
-        repo=r; userRepo=u;
+        this.repository=repository;
+        this.userRepository=userRepository;
     }
-
-    public LoanRequest submitRequest(LoanRequest lr)
+    @Override
+    public LoanRequest submit(Long userId,LoanRequest request)
     {
-        if(lr.getRequestedAmount()==null || lr.getRequestedAmount()<=0)
+        if(request.getAmount()<=0)
+        {
             throw new BadRequestException("Invalid amount");
-
-        userRepo.findById(lr.getUser().getId()).orElseThrow();
-
-        lr.setStatus(LoanRequest.Status.PENDING.name());
-        lr.setSubmittedAt(LocalDateTime.now());
-        return repo.save(lr);
+        }
+        User user=userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        request.setUser(user);
+        return repository.save(request);
     }
-
-    public List<LoanRequest> getRequestsByUser(Long id)
+    @Override
+    public List<LoanRequest> getByUser(Long userId)
     {
-        return repo.findByUserId(id);
-    }
-
-    public LoanRequest getById(Long id)
-    {
-        return repo.findById(id).orElse(null);
+        return repository.findByUserId(userId);
     }
 }
