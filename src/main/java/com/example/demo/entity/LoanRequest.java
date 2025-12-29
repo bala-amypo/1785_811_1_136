@@ -1,33 +1,78 @@
 package com.example.demo.entity;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "loan_requests")
 public class LoanRequest
 {
-    public enum Status { PENDING, APPROVED, REJECTED }
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private User user;
-    private Double requestedAmount;
+
+    private Double amount;
+
     private Integer tenureMonths;
-    private String status;
-    private LocalDateTime submittedAt;
 
-    public Long getId(){return id;}
-    public void setId(Long id){this.id=id;}
+    private LocalDateTime createdAt;
 
-    public User getUser(){return user;}
-    public void setUser(User user){this.user=user;}
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public Double getRequestedAmount(){return requestedAmount;}
-    public void setRequestedAmount(Double requestedAmount){this.requestedAmount=requestedAmount;}
+    @PrePersist
+    public void onCreate()
+    {
+        this.createdAt = LocalDateTime.now();
+    }
 
-    public Integer getTenureMonths(){return tenureMonths;}
-    public void setTenureMonths(Integer tenureMonths){this.tenureMonths=tenureMonths;}
+    public LoanRequest()
+    {
+    }
 
-    public String getStatus(){return status;}
-    public void setStatus(String status){this.status=status;}
+    public Long getId()
+    {
+        return id;
+    }
 
-    public LocalDateTime getSubmittedAt(){return submittedAt;}
-    public void setSubmittedAt(LocalDateTime submittedAt){this.submittedAt=submittedAt;}
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
+    public Double getAmount()
+    {
+        return amount;
+    }
+
+    public void setAmount(Double amount)
+    {
+        this.amount = amount;
+    }
+
+    public Integer getTenureMonths()
+    {
+        return tenureMonths;
+    }
+
+    public void setTenureMonths(Integer tenureMonths)
+    {
+        this.tenureMonths = tenureMonths;
+    }
+
+    public LocalDateTime getCreatedAt()
+    {
+        return createdAt;
+    }
+
+    public User getUser()
+    {
+        return user;
+    }
+
+    public void setUser(User user)
+    {
+        this.user = user;
+    }
 }

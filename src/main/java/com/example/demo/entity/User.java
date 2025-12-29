@@ -1,11 +1,6 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
@@ -15,16 +10,20 @@ public class User
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true,nullable = false)
     private String email;
 
     @Column(nullable = false)
     private String password;
 
-    private String name;
-
     public User()
     {
+    }
+
+    public User(String email,String password)
+    {
+        this.email = email;
+        this.password = password;
     }
 
     public Long getId()
@@ -55,15 +54,5 @@ public class User
     public void setPassword(String password)
     {
         this.password = password;
-    }
-
-    public String getName()
-    {
-        return name;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
     }
 }
