@@ -1,37 +1,35 @@
 package com.example.demo.security;
 
-import io.jsonwebtoken.*;
-import java.util.*;
-import javax.crypto.spec.SecretKeySpec;
-import java.security.Key;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.Claims;
+import java.util.Date;
 
 public class JwtUtil
 {
-    private final Key key;
-    private final long expiration;
+    private static final String SECRET = "mysecretkeymysecretkeymysecretkey";
+    private static final long EXPIRATION = 1000 * 60 * 60;
 
-    public JwtUtil(String secret, long expiration)
-    {
-        this.key = new SecretKeySpec(secret.getBytes(), SignatureAlgorithm.HS256.getJcaName());
-        this.expiration = expiration;
-    }
-
-    public String generateToken(Map<String, Object> claims, String subject)
+    public String generateToken(String email)
     {
         return Jwts.builder()
-            .setClaims(claims)
-            .setSubject(subject)
+            .setSubject(email)
             .setIssuedAt(new Date())
-            .setExpiration(new Date(System.currentTimeMillis() + expiration))
-            .signWith(SignatureAlgorithm.HS256, key)
+            .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
+            .signWith(SignatureAlgorithm.HS256, SECRET)
             .compact();
     }
 
     public Claims getAllClaims(String token)
     {
         return Jwts.parser()
-            .setSigningKey(key)
+            .setSigningKey(SECRET)
             .parseClaimsJws(token)
             .getBody();
+    }
+
+    public String extractEmail(String token)
+    {
+        return getAllClaims(token).getSubject();
     }
 }
