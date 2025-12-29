@@ -19,12 +19,12 @@ public class UserController
     @PostMapping
     public ResponseEntity<User> register(@RequestBody User user)
     {
-        return ResponseEntity.ok(userService.saveUser(user));
+        return ResponseEntity.ok(userService.registerUser(user));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getById(@PathVariable Long id)
     {
-        return ResponseEntity.ok(userService.findUserById(id));
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 }

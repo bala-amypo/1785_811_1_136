@@ -21,12 +21,16 @@ public class LoanRequestController
     @PostMapping
     public ResponseEntity<LoanRequest> submit(@RequestBody LoanRequest request)
     {
-        return ResponseEntity.ok(loanRequestService.submit(request));
+        return ResponseEntity.ok(
+            loanRequestService.submitLoanRequest(request)
+        );
     }
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<LoanRequest>> getByUser(@PathVariable Long userId)
     {
-        return ResponseEntity.ok(loanRequestService.findByUserId(userId));
+        return ResponseEntity.ok(
+            loanRequestService.getRequestsByUserId(userId)
+        );
     }
 }
