@@ -19,12 +19,12 @@ public class FinancialProfileController
     @PostMapping
     public ResponseEntity<FinancialProfile> create(@RequestBody FinancialProfile profile)
     {
-        return ResponseEntity.ok(financialProfileService.createProfile(profile));
+        return ResponseEntity.ok(financialProfileService.createFinancialProfile(profile));
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<FinancialProfile> getByUser(@PathVariable Long userId)
+    public ResponseEntity<FinancialProfile> getLatest(@PathVariable Long userId)
     {
-        return ResponseEntity.ok(financialProfileService.getLatestByUserId(userId));
+        return ResponseEntity.ok(financialProfileService.getLatestProfileByUserId(userId));
     }
 }

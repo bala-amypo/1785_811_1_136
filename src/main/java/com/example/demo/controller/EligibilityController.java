@@ -21,10 +21,4 @@ public class EligibilityController
     {
         return ResponseEntity.ok(eligibilityService.evaluateEligibility(loanRequestId));
     }
-
-    @GetMapping("/{loanRequestId}")
-    public ResponseEntity<EligibilityResult> get(@PathVariable Long loanRequestId)
-    {
-        return ResponseEntity.ok(eligibilityService.getEligibilityByLoanRequestId(loanRequestId));
-    }
 }

@@ -21,10 +21,4 @@ public class RiskLogController
     {
         return ResponseEntity.ok(riskAssessmentService.assessRisk(loanRequestId));
     }
-
-    @GetMapping("/{loanRequestId}")
-    public ResponseEntity<RiskAssessment> get(@PathVariable Long loanRequestId)
-    {
-        return ResponseEntity.ok(riskAssessmentService.getRiskByLoanRequestId(loanRequestId));
-    }
 }
