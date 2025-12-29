@@ -12,18 +12,12 @@ public class EligibilityController
 
     public EligibilityController(EligibilityService eligibilityService)
     {
-        this.eligibilityService = eligibilityService;
+        this.eligibilityService=eligibilityService;
     }
 
     @PostMapping("/{loanRequestId}")
     public EligibilityResult evaluate(@PathVariable Long loanRequestId)
     {
         return eligibilityService.evaluateEligibility(loanRequestId);
-    }
-
-    @GetMapping("/{loanRequestId}")
-    public EligibilityResult getByLoanRequest(@PathVariable Long loanRequestId)
-    {
-        return eligibilityService.getByLoanRequestId(loanRequestId).orElseThrow();
     }
 }

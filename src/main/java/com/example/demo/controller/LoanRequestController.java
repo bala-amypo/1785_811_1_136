@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/loan-requests")
+@RequestMapping("/loan-request")
 public class LoanRequestController
 {
     private final LoanRequestService loanRequestService;
 
     public LoanRequestController(LoanRequestService loanRequestService)
     {
-        this.loanRequestService = loanRequestService;
+        this.loanRequestService=loanRequestService;
     }
 
     @PostMapping
@@ -27,11 +27,5 @@ public class LoanRequestController
     public List<LoanRequest> getByUser(@PathVariable Long userId)
     {
         return loanRequestService.getRequestsByUser(userId);
-    }
-
-    @GetMapping("/{id}")
-    public LoanRequest getById(@PathVariable Long id)
-    {
-        return loanRequestService.getById(id);
     }
 }

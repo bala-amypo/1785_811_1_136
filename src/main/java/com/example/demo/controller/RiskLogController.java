@@ -12,18 +12,12 @@ public class RiskLogController
 
     public RiskLogController(RiskAssessmentService riskAssessmentService)
     {
-        this.riskAssessmentService = riskAssessmentService;
+        this.riskAssessmentService=riskAssessmentService;
     }
 
     @PostMapping("/{loanRequestId}")
     public RiskAssessment assess(@PathVariable Long loanRequestId)
     {
         return riskAssessmentService.assessRisk(loanRequestId);
-    }
-
-    @GetMapping("/{loanRequestId}")
-    public RiskAssessment getByLoanRequest(@PathVariable Long loanRequestId)
-    {
-        return riskAssessmentService.getByLoanRequestId(loanRequestId);
     }
 }

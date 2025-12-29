@@ -4,5 +4,5 @@ import com.example.demo.entity.FinancialProfile;
 
 public interface FinancialProfileService
 {
-    FinancialProfile getByUserId(long userId);
+    FinancialProfile createFinancialProfile(FinancialProfile profile);
 }

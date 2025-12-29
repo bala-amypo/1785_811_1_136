@@ -12,18 +12,12 @@ public class FinancialProfileController
 
     public FinancialProfileController(FinancialProfileService financialProfileService)
     {
-        this.financialProfileService = financialProfileService;
+        this.financialProfileService=financialProfileService;
     }
 
     @PostMapping
     public FinancialProfile create(@RequestBody FinancialProfile profile)
     {
-        return financialProfileService.create(profile);
-    }
-
-    @GetMapping("/user/{userId}")
-    public FinancialProfile getByUser(@PathVariable Long userId)
-    {
-        return financialProfileService.getByUserId(userId);
+        return financialProfileService.createFinancialProfile(profile);
     }
 }
