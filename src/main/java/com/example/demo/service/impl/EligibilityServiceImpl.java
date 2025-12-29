@@ -1,32 +1,58 @@
 package com.example.demo.service.impl;
+
 import com.example.demo.entity.EligibilityResult;
+import com.example.demo.entity.FinancialProfile;
 import com.example.demo.entity.LoanRequest;
+import com.example.demo.exception.BadRequestException;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.EligibilityResultRepository;
+import com.example.demo.repository.FinancialProfileRepository;
 import com.example.demo.repository.LoanRequestRepository;
 import com.example.demo.service.EligibilityService;
 import org.springframework.stereotype.Service;
+
 @Service
-public class EligibilityServiceImpl implements EligibilityService
-{
-    private final EligibilityResultRepository repository;
+public class EligibilityServiceImpl implements EligibilityService {
+
     private final LoanRequestRepository loanRequestRepository;
-    public EligibilityServiceImpl(EligibilityResultRepository repository,LoanRequestRepository loanRequestRepository)
-    {
-        this.repository=repository;
-        this.loanRequestRepository=loanRequestRepository;
+    private final FinancialProfileRepository financialProfileRepository;
+    private final EligibilityResultRepository eligibilityResultRepository;
+
+    public EligibilityServiceImpl(LoanRequestRepository loanRequestRepository,
+                                  FinancialProfileRepository financialProfileRepository,
+                                  EligibilityResultRepository eligibilityResultRepository) {
+        this.loanRequestRepository = loanRequestRepository;
+        this.financialProfileRepository = financialProfileRepository;
+        this.eligibilityResultRepository = eligibilityResultRepository;
     }
+
     @Override
-    public EligibilityResult evaluate(Long loanRequestId)
-    {
-        if(repository.findByLoanRequestId(loanRequestId).isPresent())
-        {
-            return repository.findByLoanRequestId(loanRequestId).get();
+    public EligibilityResult evaluateEligibility(Long loanRequestId) {
+        LoanRequest request = loanRequestRepository.findById(loanRequestId)
+                .orElseThrow(() -> new ResourceNotFoundException("LoanRequest not found"));
+
+        if (eligibilityResultRepository.findByLoanRequestId(loanRequestId).isPresent()) {
+            throw new BadRequestException("Eligibility already evaluated");
         }
-        LoanRequest request=loanRequestRepository.findById(loanRequestId).orElseThrow(() -> new ResourceNotFoundException("Loan not found"));
-        EligibilityResult result=new EligibilityResult();
+
+        Long userId = request.getUser().getId();
+        FinancialProfile profile = financialProfileRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Profile not found"));
+
+        double disposableIncome = profile.getMonthlyIncome() - profile.getMonthlyExpenses()
+                - (profile.getExistingLoanEmi() != null ? profile.getExistingLoanEmi() : 0.0);
+        if (disposableIncome < 0) disposableIncome = 0;
+        double maxEligible = disposableIncome * 10; // simple heuristic
+
+        EligibilityResult result = new EligibilityResult();
         result.setLoanRequest(request);
-        result.setEligible(true);
-        return repository.save(result);
+        result.setMaxEligibleAmount(maxEligible);
+        return eligibilityResultRepository.save(result);
+    }
+
+    @Override
+    public EligibilityResult getByLoanRequestId(Long loanRequestId) {
+        return eligibilityResultRepository.findByLoanRequestId(loanRequestId)
+                .orElseThrow(() -> new ResourceNotFoundException("Eligibility not found"));
     }
 }
