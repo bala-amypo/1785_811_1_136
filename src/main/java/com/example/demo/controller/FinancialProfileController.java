@@ -1,12 +1,29 @@
 package com.example.demo.controller;
+
+import com.example.demo.entity.FinancialProfile;
+import com.example.demo.service.FinancialProfileService;
 import org.springframework.web.bind.annotation.*;
+
 @RestController
-@RequestMapping("/financial-profile")
+@RequestMapping("/api/financial-profiles")
 public class FinancialProfileController
 {
-    @GetMapping("/{userId}")
-    public String getProfile(@PathVariable Long userId)
+    private final FinancialProfileService service;
+
+    public FinancialProfileController(FinancialProfileService service)
     {
-        return "Profile Data";
+        this.service = service;
+    }
+
+    @PostMapping
+    public FinancialProfile createOrUpdate(@RequestBody FinancialProfile profile)
+    {
+        return service.getByUserId(profile.getUser().getId());
+    }
+
+    @GetMapping("/user/{userId}")
+    public FinancialProfile getByUser(@PathVariable Long userId)
+    {
+        return service.getByUserId(userId);
     }
 }

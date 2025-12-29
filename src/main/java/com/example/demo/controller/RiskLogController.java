@@ -1,12 +1,23 @@
 package com.example.demo.controller;
+
+import com.example.demo.entity.RiskAssessment;
+import com.example.demo.service.RiskAssessmentService;
 import org.springframework.web.bind.annotation.*;
+
 @RestController
-@RequestMapping("/risk")
+@RequestMapping("/api/risk-logs")
 public class RiskLogController
 {
-    @GetMapping("/{userId}")
-    public String getRisk(@PathVariable Long userId)
+    private final RiskAssessmentService service;
+
+    public RiskLogController(RiskAssessmentService service)
     {
-        return "Low Risk";
+        this.service = service;
+    }
+
+    @GetMapping("/{loanRequestId}")
+    public RiskAssessment getRisk(@PathVariable Long loanRequestId)
+    {
+        return service.getByLoanRequestId(loanRequestId);
     }
 }
