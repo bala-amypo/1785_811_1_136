@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.EligibilityResult;
 import com.example.demo.service.EligibilityService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,8 +16,14 @@ public class EligibilityController
     }
 
     @PostMapping("/{loanRequestId}")
-    public ResponseEntity<EligibilityResult> evaluate(@PathVariable Long loanRequestId)
+    public EligibilityResult evaluate(@PathVariable Long loanRequestId)
     {
-        return ResponseEntity.ok(eligibilityService.evaluateEligibility(loanRequestId));
+        return eligibilityService.evaluateEligibility(loanRequestId);
+    }
+
+    @GetMapping("/{loanRequestId}")
+    public EligibilityResult getByLoanRequest(@PathVariable Long loanRequestId)
+    {
+        return eligibilityService.getByLoanRequestId(loanRequestId);
     }
 }

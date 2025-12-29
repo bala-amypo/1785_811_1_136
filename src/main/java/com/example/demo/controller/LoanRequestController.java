@@ -2,13 +2,12 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.LoanRequest;
 import com.example.demo.service.LoanRequestService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/loan-request")
+@RequestMapping("/loan-requests")
 public class LoanRequestController
 {
     private final LoanRequestService loanRequestService;
@@ -19,18 +18,20 @@ public class LoanRequestController
     }
 
     @PostMapping
-    public ResponseEntity<LoanRequest> submit(@RequestBody LoanRequest request)
+    public LoanRequest submit(@RequestBody LoanRequest request)
     {
-        return ResponseEntity.ok(
-            loanRequestService.submitLoanRequest(request)
-        );
+        return loanRequestService.submitRequest(request);
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<LoanRequest>> getByUser(@PathVariable Long userId)
+    public List<LoanRequest> getByUser(@PathVariable Long userId)
     {
-        return ResponseEntity.ok(
-            loanRequestService.getRequestsByUserId(userId)
-        );
+        return loanRequestService.getRequestsByUser(userId);
+    }
+
+    @GetMapping("/{id}")
+    public LoanRequest getById(@PathVariable Long id)
+    {
+        return loanRequestService.getById(id);
     }
 }
