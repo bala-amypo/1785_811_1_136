@@ -24,6 +24,6 @@ public class EligibilityController
     @GetMapping("/{loanRequestId}")
     public EligibilityResult getByLoanRequest(@PathVariable Long loanRequestId)
     {
-        return eligibilityService.getByLoanRequestId(loanRequestId);
+        return eligibilityService.getByLoanRequestId(loanRequestId).orElseThrow();
     }
 }
