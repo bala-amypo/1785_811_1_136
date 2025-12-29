@@ -1,78 +1,66 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Table(name = "loan_requests")
-public class LoanRequest
-{
+public class LoanRequest {
+
+    public enum Status { PENDING, APPROVED, REJECTED }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double amount;
+    private Double requestedAmount;
 
     private Integer tenureMonths;
-
-    private LocalDateTime createdAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    // stored as String because tests compare to LoanRequest.Status.PENDING.name()
+    private String status;
+
+    private Instant submittedAt;
+
     @PrePersist
-    public void onCreate()
-    {
-        this.createdAt = LocalDateTime.now();
+    public void prePersist() {
+        // t28_loan_request_persist_sets_defaults:
+        // if status not set before save, default to PENDING
+        if (status == null) {
+            status = Status.PENDING.name();
+        }
+        // if submittedAt not set, initialize now
+        if (submittedAt == null) {
+            submittedAt = Instant.now();
+        }
     }
 
-    public LoanRequest()
-    {
-    }
+    // getters and setters
+    public Long getId() { return id; }
 
-    public Long getId()
-    {
-        return id;
-    }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
+    public Double getRequestedAmount() { return requestedAmount; }
 
-    public Double getAmount()
-    {
-        return amount;
-    }
+    public void setRequestedAmount(Double requestedAmount) { this.requestedAmount = requestedAmount; }
 
-    public void setAmount(Double amount)
-    {
-        this.amount = amount;
-    }
+    public Integer getTenureMonths() { return tenureMonths; }
 
-    public Integer getTenureMonths()
-    {
-        return tenureMonths;
-    }
+    public void setTenureMonths(Integer tenureMonths) { this.tenureMonths = tenureMonths; }
 
-    public void setTenureMonths(Integer tenureMonths)
-    {
-        this.tenureMonths = tenureMonths;
-    }
+    public User getUser() { return user; }
 
-    public LocalDateTime getCreatedAt()
-    {
-        return createdAt;
-    }
+    public void setUser(User user) { this.user = user; }
 
-    public User getUser()
-    {
-        return user;
-    }
+    public String getStatus() { return status; }
 
-    public void setUser(User user)
-    {
-        this.user = user;
-    }
+    public void setStatus(String status) { this.status = status; }
+
+    public Instant getSubmittedAt() { return submittedAt; }
+
+    public void setSubmittedAt(Instant submittedAt) { this.submittedAt = submittedAt; }
 }
