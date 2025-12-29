@@ -8,25 +8,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/loan-request")
-public class LoanRequestController
-{
+@RequestMapping("/loan-requests")
+public class LoanRequestController {
+
     private final LoanRequestService loanRequestService;
 
-    public LoanRequestController(LoanRequestService loanRequestService)
-    {
+    public LoanRequestController(LoanRequestService loanRequestService) {
         this.loanRequestService = loanRequestService;
     }
 
-    @PostMapping("/{userId}")
-    public ResponseEntity<LoanRequest> submit(@PathVariable Long userId,@RequestBody LoanRequest request)
-    {
-        return ResponseEntity.ok(loanRequestService.submitRequest(userId,request));
+    @PostMapping
+    public ResponseEntity<LoanRequest> submit(@RequestBody LoanRequest request) {
+        LoanRequest saved = loanRequestService.submitRequest(request);
+        return ResponseEntity.ok(saved);
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<List<LoanRequest>> getByUser(@PathVariable Long userId)
-    {
-        return ResponseEntity.ok(loanRequestService.getRequestsByUser(userId));
+    @GetMapping("/{id}")
+    public ResponseEntity<LoanRequest> getById(@PathVariable Long id) {
+        LoanRequest lr = loanRequestService.getById(id);
+        return ResponseEntity.ok(lr);
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<LoanRequest>> getByUser(@PathVariable Long userId) {
+        List<LoanRequest> list = loanRequestService.getRequestsByUser(userId);
+        return ResponseEntity.ok(list);
     }
 }
