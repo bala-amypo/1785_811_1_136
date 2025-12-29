@@ -13,8 +13,8 @@ public class SwaggerConfig
     {
         return new OpenAPI()
             .info(new Info()
-                .title("Loan Eligibility API")
+                .title("Loan Eligibility EMI Risk Checker API")
                 .version("1.0")
-                .description("Loan Eligibility and Risk Checker"));
+                .description("Spring Boot Backend API with JWT Authentication"));
     }
 }
