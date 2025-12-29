@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.RiskAssessment;
 import com.example.demo.service.RiskAssessmentService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,12 +13,12 @@ public class RiskLogController
 
     public RiskLogController(RiskAssessmentService riskAssessmentService)
     {
-        this.riskAssessmentService=riskAssessmentService;
+        this.riskAssessmentService = riskAssessmentService;
     }
 
     @PostMapping("/{loanRequestId}")
-    public RiskAssessment assess(@PathVariable Long loanRequestId)
+    public ResponseEntity<RiskAssessment> assess(@PathVariable Long loanRequestId)
     {
-        return riskAssessmentService.assessRisk(loanRequestId);
+        return ResponseEntity.ok(riskAssessmentService.assessRisk(loanRequestId));
     }
 }

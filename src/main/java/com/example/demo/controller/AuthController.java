@@ -2,8 +2,10 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.AuthRequest;
 import com.example.demo.dto.AuthResponse;
+import com.example.demo.entity.User;
 import com.example.demo.security.JwtUtil;
 import com.example.demo.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,18 +13,19 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController
 {
     private final UserService userService;
-    private final JwtUtil jwtUtil = new JwtUtil();
+    private final JwtUtil jwtUtil;
 
-    public AuthController(UserService userService)
+    public AuthController(UserService userService, JwtUtil jwtUtil)
     {
         this.userService = userService;
+        this.jwtUtil = jwtUtil;
     }
 
     @PostMapping("/login")
-    public AuthResponse login(@RequestBody AuthRequest request)
+    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request)
     {
-        userService.validateLogin(request.getEmail(), request.getPassword());
-        String token = jwtUtil.generateToken(request.getEmail());
-        return new AuthResponse(token);
+        User user = userService.authenticate(request.getEmail(), request.getPassword());
+        String token = jwtUtil.generateToken(user.getEmail());
+        return ResponseEntity.ok(new AuthResponse(token));
     }
 }

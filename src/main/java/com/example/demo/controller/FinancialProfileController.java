@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.FinancialProfile;
 import com.example.demo.service.FinancialProfileService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,12 +13,12 @@ public class FinancialProfileController
 
     public FinancialProfileController(FinancialProfileService financialProfileService)
     {
-        this.financialProfileService=financialProfileService;
+        this.financialProfileService = financialProfileService;
     }
 
-    @PostMapping
-    public FinancialProfile create(@RequestBody FinancialProfile profile)
+    @PostMapping("/{userId}")
+    public ResponseEntity<FinancialProfile> create(@PathVariable Long userId,@RequestBody FinancialProfile profile)
     {
-        return financialProfileService.createFinancialProfile(profile);
+        return ResponseEntity.ok(financialProfileService.createProfile(userId,profile));
     }
 }
