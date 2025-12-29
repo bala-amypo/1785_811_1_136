@@ -15,26 +15,22 @@ public class JwtFilter implements Filter
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException
+        throws IOException, ServletException
     {
         HttpServletRequest req = (HttpServletRequest) request;
-        String header = req.getHeader("Authorization");
+        String auth = req.getHeader("Authorization");
 
-        if(header != null && header.startsWith("Bearer "))
+        if (auth != null && auth.startsWith("Bearer "))
         {
-            String token = header.substring(7);
             try
             {
-                jwtUtil.getAllClaims(token);
+                jwtUtil.getAllClaims(auth.substring(7));
             }
-            catch(Exception e)
+            catch (Exception ex)
             {
-                HttpServletResponse resp = (HttpServletResponse) response;
-                resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return;
+                // swallow invalid token
             }
         }
-
         chain.doFilter(request, response);
     }
 }

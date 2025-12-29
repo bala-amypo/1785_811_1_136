@@ -1,13 +1,12 @@
 package com.example.demo.servlet;
 
 import jakarta.servlet.http.*;
-import jakarta.servlet.*;
 import java.io.*;
 
 public class SimpleStatusServlet extends HttpServlet
 {
     @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException
+    public public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException
     {
         resp.setContentType("text/plain");
         PrintWriter out = resp.getWriter();
