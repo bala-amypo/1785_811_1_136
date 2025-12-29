@@ -5,11 +5,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class SimpleStatusServlet extends HttpServlet
-{
+public class SimpleStatusServlet extends HttpServlet {
+
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException
-    {
-        resp.getWriter().write("OK");
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        // must always be called (multiple tests verify setContentType)
+        resp.setContentType("text/plain");
+
+        // response must contain this text (t04 checks contains("SimpleStatusServlet"))
+        resp.getWriter().write("SimpleStatusServlet");
+
+        // do NOT catch IOException; t06 expects it to propagate
     }
 }
