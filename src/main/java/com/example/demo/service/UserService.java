@@ -1,6 +1,8 @@
 package com.example.demo.service;
-
+import com.example.demo.entity.User;
 public interface UserService
 {
-    void validateLogin(String email, String password);
+    User register(User user);
+    User getUserById(Long id);
+    User authenticate(String email,String password);
 }
